@@ -1,0 +1,20 @@
+services:
+  bobapp-back:
+    build: ./back
+    ports:
+      - "8080:8080"
+    networks:
+      - bobapp-network
+
+  bobapp-front:
+    build: ./front
+    ports:
+      - "8081:80"
+    depends_on:
+      - bobapp-back
+    networks:
+      - bobapp-network
+
+networks:
+  bobapp-network:
+    driver: bridge
