@@ -47,6 +47,7 @@ jobs:
       with:
         node-version: '22.x'
         cache: 'npm'
+        cache-dependency-path: front/package-lock.json
     - name: Fetch dependencies
       run: npm ci
     - name: Run tests and coverage
