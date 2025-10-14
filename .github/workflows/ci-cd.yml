@@ -72,26 +72,33 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+          cache: maven
 
       - name: Use Node.js 22
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
+          cache: 'npm'
+          cache-dependency-path: front/package-lock.json
 
-      - name: Download backend coverage report
-        uses: actions/download-artifact@v4
-        with:
-          name: jacoco-report
-          path: back/target/site/jacoco/
+      - name: Run backend tests with coverage
+        working-directory: ./back
+        run: mvn clean test
 
-      - name: Download frontend coverage report
-        uses: actions/download-artifact@v4
-        with:
-          name: angular-coverage-report
-          path: front/coverage/bobapp/
+      - name: Install frontend dependencies
+        working-directory: ./front
+        run: npm ci
+
+      - name: Run frontend tests with coverage
+        working-directory: ./front
+        run: npm test -- --code-coverage --watch=false --browsers=ChromeHeadless
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
+
+
