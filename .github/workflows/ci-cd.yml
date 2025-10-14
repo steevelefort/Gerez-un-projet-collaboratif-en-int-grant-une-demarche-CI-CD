@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  backend-build-and-test:
 
     runs-on: ubuntu-latest
     defaults:
@@ -29,6 +29,13 @@ jobs:
       run: mvn test
     - name: Package application
       run: mvn package -DskipTests
+    - name: Generate Jacoco coverage report
+      run: mvn jacoco:report
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      with:
+        name: jacoco-report
+        path: back/target/site/jacoco/
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
