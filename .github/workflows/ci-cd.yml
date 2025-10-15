@@ -117,7 +117,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Delete backend backend-build-temp
-        uses: actions/delete-artifact@v5
+        uses: geekyego/delete-artifact@v5
         with:
           name: backend-build-temp
 
