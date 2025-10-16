@@ -38,7 +38,13 @@ jobs:
       with:
         name: backend-build-temp
         path: back/target/classes
-
+    - name: Generate classpath file
+      run: mvn dependency:build-classpath -Dmdep.outputFile=target/classpath.txt
+    - name: Upload classpath artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: backend-classpath
+        path: back/target/classpath.txt
 
   frontend-test:
     runs-on: ubuntu-latest
@@ -85,7 +91,16 @@ jobs:
           node-version: '22.x'
           cache: 'npm'
           cache-dependency-path: front/package-lock.json
-      
+
+      - name: Download backend classpath
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-classpath
+          path: back/target
+ 
+      - name: Set sonar.java.libraries property
+        run: echo "sonar.java.libraries=$(cat back/target/classpath.txt | tr ':' ',')" >> sonar-project.properties
+
       - name: Download backend-build-temp
         uses: actions/download-artifact@v4
         with:
