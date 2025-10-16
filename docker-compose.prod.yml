@@ -1,0 +1,20 @@
+services:
+  bobapp-back:
+    image: eveetz/bobapp-back:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - bobapp-network
+
+  bobapp-front:
+    image: eveetz/bobapp-front:latest
+    ports:
+      - "8081:80"
+    depends_on:
+      - bobapp-back
+    networks:
+      - bobapp-network
+
+networks:
+  bobapp-network:
+    driver: bridge
