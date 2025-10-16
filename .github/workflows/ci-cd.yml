@@ -37,7 +37,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: backend-build-temp
-        path: back/target
+        path: back/target/classes
 
 
   frontend-test:
@@ -90,7 +90,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: backend-build-temp
-          path: back/target
+          path: back/target/classes
 
       - name: Download frontend coverage report
         uses: actions/download-artifact@v4
