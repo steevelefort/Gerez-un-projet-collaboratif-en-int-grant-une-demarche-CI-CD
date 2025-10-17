@@ -136,6 +136,11 @@ jobs:
         with:
           name: backend-build-temp
 
+      - name: Delete backend-classpath
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: backend-classpath
+
   docker-build-push:
     name: Build and push Docker images
     runs-on: ubuntu-latest
