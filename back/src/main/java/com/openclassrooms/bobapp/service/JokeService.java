@@ -24,4 +24,8 @@ public class JokeService {
         return jokes.get(randomIndex);
     }
 
+    public List<Joke> getJokes() {
+        return this.jsonReader.getJokes();
+    }
+
 }
