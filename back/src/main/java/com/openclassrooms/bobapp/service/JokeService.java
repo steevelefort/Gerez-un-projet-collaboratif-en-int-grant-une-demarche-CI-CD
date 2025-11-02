@@ -28,4 +28,8 @@ public class JokeService {
         return this.jsonReader.getJokes();
     }
 
+    public int getJokesCount() {
+        return this.jsonReader.getJokes().size();
+    }
+
 }
